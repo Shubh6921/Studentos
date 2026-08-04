@@ -1,6 +1,6 @@
 import React, { createContext, useState, useEffect, useRef, useContext } from 'react';
 import { AuthContext } from './AuthContext';
-import { getUserData, saveUserData } from '../firebase/db';
+import { getUserData, saveUserData } from '../supabase/db';
 
 export const AppContext = createContext();
 
@@ -245,7 +245,7 @@ export const AppProvider = ({ children }) => {
 
     const loadData = async () => {
       try {
-        const firestoreData = await getUserData(user.uid);
+        const firestoreData = await getUserData(user.id);
         if (firestoreData) {
           if (firestoreData.userName) setUserName(firestoreData.userName);
           if (firestoreData.studentMeta) setStudentMeta(firestoreData.studentMeta);
@@ -285,10 +285,10 @@ export const AppProvider = ({ children }) => {
             theme,
             customQuote,
           };
-          await saveUserData(user.uid, defaultData);
+          await saveUserData(user.id, defaultData);
         }
       } catch (error) {
-        console.error("Error loading user data from Firestore:", error);
+        console.error("Error loading user data from Supabase:", error);
       } finally {
         setDataLoaded(true);
         setTimeout(() => {
@@ -300,7 +300,7 @@ export const AppProvider = ({ children }) => {
     loadData();
   }, [user]);
 
-  // 2. Debounced save to Firestore on local state change
+  // 2. Debounced save to Supabase on local state change
   useEffect(() => {
     if (!user || !dataLoaded || isInitialLoad.current) return;
 
@@ -325,7 +325,7 @@ export const AppProvider = ({ children }) => {
     };
 
     const handler = setTimeout(() => {
-      saveUserData(user.uid, dataToSave);
+      saveUserData(user.id, dataToSave);
       // Backup to localStorage
       saveStorage('studentos_userName', userName);
       saveStorage('studentos_studentMeta', studentMeta);
@@ -626,7 +626,7 @@ export const AppProvider = ({ children }) => {
     setCustomQuote(defaultData.customQuote);
 
     if (user) {
-      saveUserData(user.uid, defaultData);
+      saveUserData(user.id, defaultData);
     }
   };
 
