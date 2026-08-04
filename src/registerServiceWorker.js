@@ -1,11 +1,17 @@
 if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('/sw.js')
-      .then(registration => {
-        console.log('StudentOS ServiceWorker registered with scope: ', registration.scope);
-      })
-      .catch(error => {
-        console.error('StudentOS ServiceWorker registration failed: ', error);
+  navigator.serviceWorker.getRegistrations().then((registrations) => {
+    for (let registration of registrations) {
+      registration.unregister().then(() => {
+        console.log('Active service worker unregistered successfully.');
       });
+    }
   });
+
+  if ('caches' in window) {
+    caches.keys().then((names) => {
+      for (let name of names) {
+        caches.delete(name);
+      }
+    });
+  }
 }
