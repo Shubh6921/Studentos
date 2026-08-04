@@ -28,6 +28,10 @@ export const AuthProvider = ({ children }) => {
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
       setUser(session?.user ?? null);
       setLoading(false);
+
+      if (session?.user && (window.location.hash || window.location.search)) {
+        window.history.replaceState({ tab: 'dashboard' }, document.title, window.location.pathname);
+      }
     });
 
     return () => {

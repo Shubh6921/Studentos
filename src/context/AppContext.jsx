@@ -59,8 +59,45 @@ const saveStorage = (key, val) => {
 export const AppProvider = ({ children }) => {
   const { user } = useContext(AuthContext);
 
-  // Global Tab Navigation State
-  const [activeTab, setActiveTab] = useState('dashboard');
+  // Global Tab Navigation State & Phone Back Button Sync
+  const [activeTab, setActiveTabState] = useState(() => {
+    if (typeof window !== 'undefined' && window.location.hash) {
+      const hash = window.location.hash.replace('#', '');
+      if (hash) return hash;
+    }
+    return 'dashboard';
+  });
+
+  const setActiveTab = (newTab, skipPush = false) => {
+    setActiveTabState(newTab);
+    if (!skipPush && typeof window !== 'undefined') {
+      if (window.history.state?.tab !== newTab) {
+        window.history.pushState({ tab: newTab }, '', '#' + newTab);
+      }
+    }
+  };
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+
+    if (!window.history.state) {
+      window.history.replaceState({ tab: activeTab }, '', '#' + activeTab);
+    }
+
+    const handlePopState = (event) => {
+      if (event.state && event.state.tab) {
+        setActiveTabState(event.state.tab);
+      } else if (window.location.hash) {
+        const hash = window.location.hash.replace('#', '');
+        if (hash) setActiveTabState(hash);
+      } else {
+        setActiveTabState('dashboard');
+      }
+    };
+
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, []);
 
   // Config & Metadata state
   const [userName, setUserName] = useState(() => loadStorage('studentos_userName', 'Shubham'));
