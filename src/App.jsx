@@ -11,6 +11,9 @@ import ProfileTab from './tabs/ProfileTab';
 import JournalTab from './tabs/JournalTab';
 import JournalEntriesPage from './tabs/JournalEntriesPage';
 import HabitsManagerPage from './tabs/HabitsManagerPage';
+import FinancialPage from './tabs/FinancialPage';
+import DailyArchivePage from './tabs/DailyArchivePage';
+import AttendanceMatrixPage from './tabs/AttendanceMatrixPage';
 import BottomNavigation from './components/BottomNavigation';
 import QuickActionFAB from './components/QuickActionFAB';
 import './styles/main.css';
@@ -48,6 +51,12 @@ const AppContent = () => {
         return <StudyTab />;
       case 'analytics':
         return <AnalyticsTab />;
+      case 'financial-page':
+        return <FinancialPage />;
+      case 'daily-archive-page':
+        return <DailyArchivePage />;
+      case 'attendance-matrix-page':
+        return <AttendanceMatrixPage />;
       case 'profile':
         return <ProfileTab />;
       case 'edit-habits':
@@ -55,6 +64,12 @@ const AppContent = () => {
       default:
         return <DashboardTab />;
     }
+  };
+
+  const getActiveNavTab = () => {
+    if (activeTab === 'edit-habits') return 'dashboard';
+    if (['financial-page', 'daily-archive-page', 'attendance-matrix-page'].includes(activeTab)) return 'analytics';
+    return activeTab;
   };
 
   return (
@@ -66,7 +81,7 @@ const AppContent = () => {
       <QuickActionFAB />
       
       {/* Navigation Dock */}
-      <BottomNavigation activeTab={activeTab === 'edit-habits' ? 'dashboard' : activeTab} setActiveTab={setActiveTab} />
+      <BottomNavigation activeTab={getActiveNavTab()} setActiveTab={setActiveTab} />
     </div>
   );
 };
