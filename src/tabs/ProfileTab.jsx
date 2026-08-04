@@ -460,7 +460,7 @@ const ProfileTab = () => {
               <div className="form-actions-row">
                 <button type="submit" className="btn-primary save-profile-btn">
                   {savedSuccess ? <Check size={16} /> : <Save size={15} />}
-                  <span>{savedSuccess ? 'Identity Saved to Local OS' : 'Save Identity Changes'}</span>
+                  <span>{savedSuccess ? 'Identity Saved to Cloud' : 'Save Identity Changes'}</span>
                 </button>
               </div>
             </form>

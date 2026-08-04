@@ -391,7 +391,7 @@ const QuickActionFAB = () => {
               ) : recordComplete ? (
                 <div className="recording-complete">
                   <CheckCircle size={32} className="success-icon" />
-                  <span>Audio Saved to Local OS</span>
+                  <span>Audio Saved to Cloud</span>
                 </div>
               ) : (
                 <div className="recording-start-state">
