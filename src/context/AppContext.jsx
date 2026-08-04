@@ -265,9 +265,11 @@ export const AppProvider = ({ children }) => {
           if (firestoreData.theme) setTheme(firestoreData.theme);
           if (firestoreData.customQuote !== undefined) setCustomQuote(firestoreData.customQuote);
         } else {
-          // Document does not exist, initialize Firestore with default data
+          // Document does not exist, initialize Supabase with default data
+          const signUpName = user.user_metadata?.display_name || user.email?.split('@')[0] || 'Student';
+          setUserName(signUpName);
           const defaultData = {
-            userName,
+            userName: signUpName,
             studentMeta,
             streak,
             semesterDay,

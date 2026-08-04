@@ -24,13 +24,14 @@ const AuthScreen = () => {
     } catch (err) {
       console.error(err);
       let msg = err.message || 'Authentication failed';
-      if (msg.includes('auth/invalid-credential')) {
+      const lowMsg = msg.toLowerCase();
+      if (lowMsg.includes('invalid login credentials') || lowMsg.includes('invalid-credential')) {
         msg = 'Invalid email or password.';
-      } else if (msg.includes('auth/email-already-in-use')) {
+      } else if (lowMsg.includes('user already registered') || lowMsg.includes('already exists') || lowMsg.includes('email-already-in-use')) {
         msg = 'Email is already registered.';
-      } else if (msg.includes('auth/weak-password')) {
+      } else if (lowMsg.includes('password should be') || lowMsg.includes('weak-password') || lowMsg.includes('weak password')) {
         msg = 'Password should be at least 6 characters.';
-      } else if (msg.includes('auth/invalid-email')) {
+      } else if (lowMsg.includes('invalid email') || lowMsg.includes('invalid-email')) {
         msg = 'Please enter a valid email address.';
       }
       setError(msg);
