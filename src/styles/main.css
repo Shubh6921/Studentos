@@ -1,0 +1,706 @@
+@import './variables.css';
+
+/* Resets */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+  line-height: 1.5;
+  transition: background-color 0.35s var(--ease-premium), color 0.35s var(--ease-premium);
+}
+
+/* Premium Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-primary);
+}
+::-webkit-scrollbar-thumb {
+  background: #1A1A1E;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #2A2A30;
+}
+
+/* Base App Layout */
+.app-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  padding-bottom: 90px; /* Space for Bottom Nav */
+  max-width: 520px;     /* Premium Mobile-First SaaS Layout */
+  margin: 0 auto;
+  position: relative;
+  background-color: var(--bg-primary);
+  box-shadow: 0 0 100px rgba(0,0,0,0.8);
+}
+
+.content-area {
+  flex: 1;
+  padding: var(--space-lg);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+  animation: fadeIn 0.4s var(--ease-premium);
+}
+
+/* Glassmorphism Cards */
+.premium-card {
+  background: var(--bg-glass);
+  backdrop-filter: var(--blur-glass);
+  -webkit-backdrop-filter: var(--blur-glass);
+  border: var(--border-premium);
+  border-radius: 20px;
+  padding: var(--space-lg);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  transition: background 0.35s var(--ease-premium), border-color 0.35s var(--ease-premium), transform var(--transition-medium);
+  position: relative;
+  overflow: hidden;
+  box-shadow: var(--shadow-premium);
+}
+
+.premium-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0) 100%);
+  pointer-events: none;
+}
+
+.premium-card:hover {
+  border-color: var(--border-color-active);
+  transform: translateY(-2px);
+  background: rgba(16, 16, 20, 0.7);
+}
+
+/* Typography Helpers */
+h1, h2, h3, h4 {
+  font-weight: 500;
+  letter-spacing: -0.02em;
+}
+
+.text-title {
+  font-size: 24px;
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.text-subtitle {
+  font-size: 14px;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-weight: 500;
+}
+
+.text-desc {
+  font-size: 14px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+/* Premium Motion Graphics Keyframes & Userflow Animations */
+@keyframes tabScaleIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.985) translateY(8px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes cardCascade {
+  0% {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes subtlePulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.6;
+    transform: scale(1.08);
+  }
+}
+
+@keyframes habitPop {
+  0% { transform: scale(1); }
+  40% { transform: scale(0.92); }
+  80% { transform: scale(1.04); }
+  100% { transform: scale(1); }
+}
+
+@keyframes floatGentle {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-3px); }
+}
+
+.content-area {
+  animation: tabScaleIn 0.38s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Staggered Card Motion Cascade */
+.content-area > *:nth-child(1) { animation: cardCascade 0.35s cubic-bezier(0.16, 1, 0.3, 1) 0.04s backwards; }
+.content-area > *:nth-child(2) { animation: cardCascade 0.35s cubic-bezier(0.16, 1, 0.3, 1) 0.08s backwards; }
+.content-area > *:nth-child(3) { animation: cardCascade 0.35s cubic-bezier(0.16, 1, 0.3, 1) 0.12s backwards; }
+.content-area > *:nth-child(4) { animation: cardCascade 0.35s cubic-bezier(0.16, 1, 0.3, 1) 0.16s backwards; }
+.content-area > *:nth-child(5) { animation: cardCascade 0.35s cubic-bezier(0.16, 1, 0.3, 1) 0.20s backwards; }
+
+/* Interactive Tactile Feedback on Buttons & Cards */
+button, .premium-card, .type-btn, .prompt-chip, .fab-menu-item, .je-entry-card {
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1),
+              background 0.2s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.2s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+button:active, .premium-card:active {
+  transform: scale(0.985);
+}
+
+.animate-pop {
+  animation: habitPop 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+
+/* Quick Actions FAB Popover */
+.fab-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.2); /* Very light dimmer, keeps dashboard visible */
+  backdrop-filter: blur(4px);    /* Minimal blur */
+  z-index: 95;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s var(--ease-premium);
+}
+
+.fab-overlay.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.fab-menu-container {
+  position: fixed;
+  bottom: 160px; /* Positions exactly above the FAB */
+  right: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: flex-end;
+  width: auto;
+  max-width: 260px;
+  transform: translateY(20px) scale(0.95);
+  transform-origin: bottom right;
+  opacity: 0;
+  transition: transform 0.3s var(--ease-premium), opacity 0.3s var(--ease-premium);
+}
+
+.fab-overlay.active .fab-menu-container {
+  transform: translateY(0) scale(1);
+  opacity: 1;
+}
+
+/* Horizontal Card layout for each item */
+.fab-menu-item {
+  background: var(--bg-card);
+  backdrop-filter: var(--blur-glass);
+  -webkit-backdrop-filter: var(--blur-glass);
+  border: var(--border-premium);
+  border-radius: 12px;
+  padding: 10px 16px;
+  display: flex;
+  flex-direction: row; /* Horizontal layout! */
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+  color: var(--text-primary);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  box-shadow: var(--shadow-premium);
+  width: max-content;
+  transition: all var(--transition-fast);
+}
+
+.fab-menu-item:hover {
+  background: var(--bg-card-hover);
+  border-color: var(--border-color-active);
+  transform: translateX(-4px); /* Slides slightly left on hover! Extremely premium details. */
+}
+
+.fab-menu-item svg {
+  color: var(--text-secondary);
+  order: 2; /* Puts the icon on the right, matching text alignment */
+  transition: color var(--transition-fast);
+}
+
+.fab-menu-item span {
+  order: 1; /* Text on the left */
+}
+
+.fab-menu-item:hover svg {
+  color: var(--text-primary);
+}
+
+/* Standard Button */
+.btn-primary {
+  background: var(--text-primary);
+  color: var(--bg-primary);
+  border: none;
+  padding: 14px 24px;
+  border-radius: 14px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-sm);
+  transition: all var(--transition-fast);
+}
+
+.btn-primary:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+
+.btn-primary:active {
+  transform: translateY(0);
+}
+
+/* Forms & Text Inputs for Reflective Modal */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(8px);
+  z-index: 200;
+  display: flex;
+  align-items: flex-end; /* Bottom sheet alignment */
+  justify-content: center;
+}
+
+.modal-content {
+  background: var(--bg-card);
+  border: var(--border-premium);
+  border-bottom: none;
+  border-radius: 24px 24px 0 0; /* Rounded top corners only */
+  padding: var(--space-md) var(--space-lg) calc(var(--space-xl) + 16px) var(--space-lg);
+  width: 100%;
+  max-width: 520px; /* Aligns with container width bounds */
+  box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.5);
+  animation: slideUp 0.35s var(--ease-premium);
+  transform: translateY(0);
+}
+
+.drawer-handle {
+  width: 36px;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 2px;
+  margin: 0 auto var(--space-md) auto;
+  flex-shrink: 0;
+}
+
+@keyframes slideUp {
+  from { transform: translateY(100%); }
+  to { transform: translateY(0); }
+}
+
+.input-premium {
+  width: 100%;
+  background: var(--bg-secondary);
+  border: var(--border-premium);
+  border-radius: 12px;
+  padding: 12px 16px;
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  outline: none;
+  transition: border-color var(--transition-fast);
+}
+
+.input-premium:focus {
+  border-color: var(--text-secondary);
+}
+
+.textarea-premium {
+  width: 100%;
+  background: var(--bg-secondary);
+  border: var(--border-premium);
+  border-radius: 14px;
+  padding: 14px 16px;
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  outline: none;
+  resize: none;
+  min-height: 100px;
+  transition: border-color var(--transition-fast);
+}
+
+.textarea-premium:focus {
+  border-color: var(--text-secondary);
+}
+
+/* Empty State Styles */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: var(--space-xl) var(--space-lg);
+  gap: var(--space-sm);
+  color: var(--text-secondary);
+}
+
+.empty-state-text {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.6;
+}
+
+/* Contextual Attendance Popover Card (Pops out to left of Attendance Pill) */
+.popover-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(4px);
+  z-index: 180;
+}
+
+.quick-action-fab-container {
+  position: fixed !important;
+  top: auto !important;
+  bottom: 80px !important;
+  right: 20px !important;
+  z-index: 150 !important;
+}
+
+.attendance-popover-card {
+  position: fixed;
+  bottom: 235px; /* Positions aligned with the Attendance pill in speed dial */
+  right: clamp(140px, 42vw, 210px); /* Positions to the left of the speed dial stack */
+  width: min(290px, 68vw);
+  background: var(--bg-card);
+  backdrop-filter: var(--blur-glass);
+  -webkit-backdrop-filter: var(--blur-glass);
+  border: var(--border-premium);
+  border-radius: 18px;
+  padding: var(--space-md);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.7);
+  z-index: 200;
+  animation: popLeft 0.25s var(--ease-premium);
+}
+
+.popover-arrow-right {
+  position: absolute;
+  right: -6px;
+  top: 22px;
+  width: 10px;
+  height: 10px;
+  background: var(--bg-card);
+  border-top: var(--border-premium);
+  border-right: var(--border-premium);
+  transform: rotate(45deg);
+}
+
+@keyframes popLeft {
+  from {
+    opacity: 0;
+    transform: translateX(14px) scale(0.94);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+}
+
+/* Quick Note List styling for developer review/history */
+.note-item {
+  border-bottom: 1px solid var(--border-color);
+  padding: var(--space-md) 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.note-item:last-child {
+  border-bottom: none;
+}
+
+/* =====================================================
+   LIGHT MODE — Component Overrides
+   Targets components that use hardcoded #08080A / obsidian
+   backgrounds set during the premium dashboard redesign.
+   ===================================================== */
+
+[data-theme="light"] .action-card,
+[data-theme="light"] .empty-action-card,
+[data-theme="light"] .timeline-card,
+[data-theme="light"] .insight-card,
+[data-theme="light"] .warning-item,
+[data-theme="light"] .premium-card {
+  background: #FFFFFF;
+  border-color: rgba(0, 0, 0, 0.08);
+}
+
+[data-theme="light"] .action-cta {
+  background: #0A0A0C;
+  color: #FFFFFF;
+}
+
+[data-theme="light"] .action-cta:hover {
+  background: #1A1A1E;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+}
+
+[data-theme="light"] .app-container {
+  background-color: var(--bg-primary);
+  box-shadow: 0 0 80px rgba(0, 0, 0, 0.08);
+}
+
+[data-theme="light"] .event-title {
+  color: #0A0A0C;
+}
+
+[data-theme="light"] .timeline-item.completed .event-title {
+  color: var(--text-secondary);
+}
+
+[data-theme="light"] .connector-line {
+  background: rgba(0, 0, 0, 0.1);
+}
+
+[data-theme="light"] .timeline-item.completed .connector-line {
+  background: rgba(45, 122, 98, 0.3);
+}
+
+[data-theme="light"] .warning-item.danger {
+  background: rgba(201, 62, 62, 0.04);
+}
+
+[data-theme="light"] .warning-item.warning {
+  background: rgba(168, 133, 74, 0.04);
+}
+
+[data-theme="light"] .warning-item.info {
+  background: rgba(58, 106, 181, 0.04);
+}
+
+[data-theme="light"] .insight-text,
+[data-theme="light"] .action-title,
+[data-theme="light"] .empty-title,
+[data-theme="light"] .hero-title,
+[data-theme="light"] .warning-text {
+  color: #0A0A0C;
+}
+
+[data-theme="light"] .btn-primary {
+  background: #0A0A0C;
+  color: #FFFFFF;
+}
+
+[data-theme="light"] .btn-primary:hover {
+  background: #1A1A1E;
+}
+
+[data-theme="light"] .input-premium,
+[data-theme="light"] .textarea-premium {
+  background: #F2F2F5;
+  color: #0A0A0C;
+  border-color: rgba(0, 0, 0, 0.1);
+}
+
+[data-theme="light"] .speed-dial-pill {
+  background: #FFFFFF;
+  border-color: rgba(0, 0, 0, 0.08);
+  color: #0A0A0C;
+}
+
+[data-theme="light"] .main-fab-trigger {
+  background: #0A0A0C;
+  color: #FFFFFF;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+}
+
+[data-theme="light"] .bottom-nav {
+  background: rgba(255, 255, 255, 0.85);
+  border-color: rgba(0, 0, 0, 0.08);
+}
+
+[data-theme="light"] .pro-drawer-panel {
+  background: #FFFFFF;
+  border-color: rgba(0, 0, 0, 0.08);
+}
+
+[data-theme="light"] .pro-student-mini-card {
+  background: #F2F2F5;
+  border-color: rgba(0, 0, 0, 0.07);
+}
+
+[data-theme="light"] .attendance-popover-card,
+[data-theme="light"] .modal-content {
+  background: #FFFFFF;
+  border-color: rgba(0, 0, 0, 0.08);
+}
+
+/* =====================================================
+   STRICT MONOCHROME BLACK & WHITE RULESET (EVERY PAGE)
+   ===================================================== */
+[data-theme="dark"] .premium-card,
+[data-theme="dark"] .action-card,
+[data-theme="dark"] .empty-action-card,
+[data-theme="dark"] .timeline-card,
+[data-theme="dark"] .insight-card,
+[data-theme="dark"] .warning-item,
+[data-theme="dark"] .pro-drawer-panel,
+[data-theme="dark"] .attendance-popover-card,
+[data-theme="dark"] .modal-content,
+[data-theme="dark"] .fab-menu-item,
+[data-theme="dark"] .speed-dial-pill,
+[data-theme="dark"] .profile-stat-box,
+[data-theme="dark"] .habit-item,
+[data-theme="dark"] .course-card,
+[data-theme="dark"] .journal-entries-cta,
+[data-theme="dark"] .je-entry-card,
+[data-theme="dark"] .journal-streak-bar {
+  background: #080808 !important;
+  border-color: rgba(255, 255, 255, 0.14) !important;
+}
+
+[data-theme="dark"] .live-dot,
+[data-theme="dark"] .pill-dot,
+[data-theme="dark"] .tag-dot,
+[data-theme="dark"] .jh-dot,
+[data-theme="dark"] .hc-pulse,
+[data-theme="dark"] .streak-fire {
+  background: #FFFFFF !important;
+  box-shadow: none !important;
+  color: #FFFFFF !important;
+}
+
+[data-theme="dark"] .warning-item.danger,
+[data-theme="dark"] .warning-item.warning,
+[data-theme="dark"] .warning-item.info,
+[data-theme="dark"] .item-badge-pill,
+[data-theme="dark"] .mini-streak-pill,
+[data-theme="dark"] .empty-status-pill,
+[data-theme="dark"] .jec-title-row,
+[data-theme="dark"] .je-entry-type-badge,
+[data-theme="dark"] .type-check,
+[data-theme="dark"] .word-progress-fill,
+[data-theme="dark"] .jecta-icon-wrap,
+[data-theme="dark"] .jpc-icon,
+[data-theme="dark"] .prompt-chip,
+[data-theme="dark"] .type-btn.active {
+  background: rgba(255, 255, 255, 0.08) !important;
+  border-color: rgba(255, 255, 255, 0.18) !important;
+  color: #FFFFFF !important;
+}
+
+[data-theme="dark"] .word-progress-fill {
+  background: #FFFFFF !important;
+}
+
+[data-theme="dark"] svg {
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+[data-theme="dark"] button {
+  border-color: rgba(255, 255, 255, 0.16);
+}
+
+[data-theme="dark"] input,
+[data-theme="dark"] textarea,
+[data-theme="dark"] select {
+  background: #040404 !important;
+  border-color: rgba(255, 255, 255, 0.16) !important;
+  color: #FFFFFF !important;
+}
+
+[data-theme="dark"] input:focus,
+[data-theme="dark"] textarea:focus {
+  border-color: rgba(255, 255, 255, 0.4) !important;
+}
+
+/* =====================================================
+   CLEAN REFINED TYPOGRAPHY (REMOVE HEAVY BOLD EFFECTS)
+   ===================================================== */
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+.hero-title, .hc-title, .action-title, .journal-hero-title, .je-title, .empty-title {
+  font-weight: 600 !important;
+}
+
+.hc-chip,
+.action-tag,
+.hero-status-tag,
+.item-badge-pill,
+.mini-streak-pill,
+.empty-status-pill,
+.jpc-label,
+.jec-label,
+.jhc-label,
+.stat-label,
+.hc-stat-label,
+.pro-group-title,
+.nav-label {
+  font-weight: 500 !important;
+  letter-spacing: 0.05em !important;
+}
+
+.btn-primary,
+.action-cta,
+.journal-save-btn,
+.type-btn,
+.footer-quick-btn,
+.prompt-chip,
+.je-filter-pill,
+.je-action-btn {
+  font-weight: 500 !important;
+}
+
+
