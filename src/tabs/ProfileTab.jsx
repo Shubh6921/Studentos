@@ -897,7 +897,7 @@ const ProfileTab = () => {
               <div className="data-action-row">
                 <div className="action-desc-col">
                   <span className="action-title">Sign Out of StudentOS</span>
-                  <span className="action-sub">Sign out of your active Firebase session</span>
+                  <span className="action-sub">Sign out of your active Supabase session</span>
                 </div>
                 <button 
                   onClick={logout} 

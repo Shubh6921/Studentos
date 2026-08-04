@@ -19,7 +19,7 @@ const AppContent = () => {
   const { user, loading } = useContext(AuthContext);
   const { activeTab, setActiveTab, dataLoaded } = useContext(AppContext);
 
-  // 1. Show loading screen while Firebase authentication is resolving
+  // 1. Show loading screen while authentication is resolving
   if (loading) {
     return <LoadingScreen />;
   }
