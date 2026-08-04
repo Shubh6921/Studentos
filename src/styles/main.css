@@ -703,4 +703,151 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: 500 !important;
 }
 
+/* =====================================================
+   TABLET RESPONSIVENESS OVERRIDES
+   ===================================================== */
+@media (min-width: 600px) {
+  /* Scale app-container to tablet portrait width */
+  .app-container {
+    max-width: 768px;
+    border-left: var(--border-premium);
+    border-right: var(--border-premium);
+  }
+
+  /* Bottom sheet drawer matches tablet container width */
+  .modal-content {
+    max-width: 768px !important;
+  }
+
+  /* Bottom navigation inner container matches tablet container width */
+  .bottom-nav-inner {
+    max-width: 768px !important;
+  }
+
+  /* Dashboard split layout */
+  .dashboard-tab-container {
+    display: grid !important;
+    grid-template-columns: 1.15fr 0.85fr !important;
+    gap: var(--space-md) !important;
+    align-items: start;
+  }
+
+  .dashboard-tab-container > *:first-child,
+  .dashboard-tab-container > .hero-card {
+    grid-column: span 2 !important;
+  }
+
+  /* Planner split layout */
+  .planner-tab {
+    display: grid !important;
+    grid-template-columns: 1.15fr 0.85fr !important;
+    gap: var(--space-md) !important;
+    align-items: start;
+  }
+
+  .planner-header {
+    grid-column: span 2 !important;
+  }
+
+  /* Study split layout */
+  .study-tab {
+    display: grid !important;
+    grid-template-columns: 1.15fr 0.85fr !important;
+    gap: var(--space-md) !important;
+    align-items: start;
+  }
+
+  .study-header {
+    grid-column: span 2 !important;
+  }
+
+  .study-tab > .focus-timer-card {
+    grid-row: span 2 !important;
+  }
+
+  /* Journal Split Reflection Canvas */
+  .journal-page {
+    display: grid !important;
+    grid-template-columns: 0.95fr 1.05fr !important;
+    gap: var(--space-md) !important;
+    align-items: start;
+  }
+
+  .journal-hero {
+    grid-column: span 2 !important;
+  }
+
+  .journal-type-switcher {
+    grid-column: 1 !important;
+  }
+
+  .journal-prompts-card {
+    grid-column: 1 !important;
+  }
+
+  .journal-editor-card {
+    grid-column: 2 !important;
+    grid-row: span 3 !important;
+  }
+
+  .journal-entries-cta {
+    grid-column: 1 !important;
+  }
+
+  .journal-streak-bar {
+    grid-column: 1 !important;
+  }
+
+  /* Analytics Split Layout */
+  .analytics-tab {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: var(--space-md) !important;
+    align-items: start;
+  }
+
+  .analytics-header {
+    grid-column: span 2 !important;
+  }
+
+  .calendar-card {
+    grid-column: span 2 !important;
+  }
+
+  .attendance-analytics-card {
+    grid-column: 1 !important;
+  }
+
+  .luxury-expense-card {
+    grid-column: 2 !important;
+  }
+}
+
+@media (min-width: 768px) {
+  /* Aligns FAB perfectly relative to tablet layout container edges */
+  .quick-action-fab-container {
+    right: calc(50% - 384px + 20px) !important;
+  }
+}
+
+@media (min-width: 900px) {
+  /* Scale app-container to landscape tablet / desktop width */
+  .app-container {
+    max-width: 920px;
+  }
+
+  .modal-content {
+    max-width: 920px !important;
+  }
+
+  .bottom-nav-inner {
+    max-width: 920px !important;
+  }
+
+  .quick-action-fab-container {
+    right: calc(50% - 460px + 20px) !important;
+  }
+}
+
+
 
